@@ -72,3 +72,7 @@ def token_handler(request: Request):
     </script>
     """
     return HTMLResponse(content=html)
+
+@app.get("/login", response_class=HTMLResponse)
+def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
