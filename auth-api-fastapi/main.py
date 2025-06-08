@@ -90,7 +90,7 @@ def dashboard(request: Request):
     """
     return HTMLResponse(content=html)
 
-@app.get("/logout", response_class=HTMLResponse)
+@app.get("/logout")
 def logout(response: Response):
-    response.delete_cookie("access_token")
-    return HTMLResponse("<p>You have been logged out. <a href='/login'>Login again</a></p>")
+    response.delete_cookie(key="access_token")
+    return RedirectResponse(url="/login", status_code=302)
