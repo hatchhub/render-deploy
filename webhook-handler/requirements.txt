@@ -1,0 +1,4 @@
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+python-dotenv==1.0.1      # Webhook secretキー管理用
+stripe==9.7.0             # Stripe公式パッケージ（Webhook署名検証用）

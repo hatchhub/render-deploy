@@ -1,0 +1,49 @@
+# render.yaml
+# Monorepo multi-service config for PlanAnalytics SaaS
+
+services:
+  - name: plananalytics-auth-api
+    type: web
+    env: python
+    buildCommand: ""
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: SITE_URL
+        sync: false
+    repoPath: auth-api-fastapi
+
+  - name: plananalytics-app
+    type: web
+    env: python
+    buildCommand: ""
+    startCommand: streamlit run app.py --server.port 10001
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SITE_URL
+        sync: false
+    repoPath: app-main-streamlit
+
+  - name: plananalytics-webhook
+    type: web
+    env: python
+    buildCommand: ""
+    startCommand: uvicorn webhook:app --host 0.0.0.0 --port 10002
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+    repoPath: webhook-handler

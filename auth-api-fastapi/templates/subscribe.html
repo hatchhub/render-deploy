@@ -1,0 +1,18 @@
+<!-- templates/subscribe.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Subscribe</title>
+  <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+</head>
+<body>
+  <h2>💳 Subscribe to Our Plan</h2>
+  <form hx-post="/api/create-checkout-session" hx-target="#result" hx-swap="innerHTML">
+    <input type="hidden" name="price_id" value="price_xxx"> <!-- Stripe Price ID -->
+    <input type="hidden" name="email" value="{{ email }}">  <!-- optional if you have login -->
+    <button type="submit">Subscribe Now</button>
+  </form>
+  <div id="result"></div>
+</body>
+</html>
