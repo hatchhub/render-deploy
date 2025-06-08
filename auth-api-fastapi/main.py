@@ -76,3 +76,7 @@ def token_handler(request: Request):
 @app.get("/login", response_class=HTMLResponse)
 def login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
+
+@app.get("/dashboard", response_class=HTMLResponse)
+def dashboard(request: Request):
+    return HTMLResponse("<h2>✅ You are logged in! Welcome to Dashboard.</h2>")
