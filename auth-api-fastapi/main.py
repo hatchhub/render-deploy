@@ -30,13 +30,16 @@ def login(
         if result.user:
             token = result.session.access_token
             response.set_cookie(key="access_token", value=token, httponly=True, samesite="Lax")
-            return HTMLResponse(
-                "<p>Login successful! <a href='/dashboard'>Go to Dashboard</a></p>"
-            )
+
+            # ここが追加！HTMX用に画面遷移を指示する
+            headers = {"HX-Redirect": "/dashboard"}
+
+            return HTMLResponse("<p>Login successful!</p>", headers=headers)
         else:
             return HTMLResponse("<p>Login failed. Please check your credentials.</p>", status_code=401)
     except Exception as e:
         return HTMLResponse(f"<p>Error: {str(e)}</p>", status_code=500)
+
 
 @app.get("/magic", response_class=HTMLResponse)
 def magic_login_page(request: Request):
