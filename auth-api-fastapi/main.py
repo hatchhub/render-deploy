@@ -79,18 +79,16 @@ def login_page(request: Request):
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
-    return HTMLResponse("<h2>✅ You are logged in! Welcome to Dashboard.</h2>")
+    access_token = request.cookies.get("access_token")
 
-@app.get("/dashboard", response_class=HTMLResponse)
-def dashboard(request: Request):
-    html = """
-    <h2>🎉 Welcome to your Dashboard</h2>
-    <p>You are logged in!</p>
-    <p><a href='/logout'>Logout</a></p>
-    """
-    return HTMLResponse(content=html)
+    if not access_token:
+        return RedirectResponse(url="/login", status_code=302)
 
-@app.get("/logout")
+    return HTMLResponse("<p>✅ You are logged in! Welcome to Dashboard.</p>")
+
+
+@app.get("/logout", response_class=HTMLResponse)
 def logout(response: Response):
+    response = RedirectResponse(url="/login", status_code=302)
     response.delete_cookie(key="access_token")
-    return RedirectResponse(url="/login", status_code=302)
+    return response
