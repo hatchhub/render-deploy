@@ -80,3 +80,17 @@ def login_page(request: Request):
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
     return HTMLResponse("<h2>✅ You are logged in! Welcome to Dashboard.</h2>")
+
+@app.get("/dashboard", response_class=HTMLResponse)
+def dashboard(request: Request):
+    html = """
+    <h2>🎉 Welcome to your Dashboard</h2>
+    <p>You are logged in!</p>
+    <p><a href='/logout'>Logout</a></p>
+    """
+    return HTMLResponse(content=html)
+
+@app.get("/logout", response_class=HTMLResponse)
+def logout(response: Response):
+    response.delete_cookie("access_token")
+    return HTMLResponse("<p>You have been logged out. <a href='/login'>Login again</a></p>")
