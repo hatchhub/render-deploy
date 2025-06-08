@@ -82,9 +82,9 @@ def dashboard(request: Request):
     access_token = request.cookies.get("access_token")
 
     if not access_token:
-        return RedirectResponse(url="/login", status_code=302)
+        return RedirectResponse(url="/", status_code=302)
 
-    return HTMLResponse("<p>✅ You are logged in! Welcome to Dashboard.</p>")
+    return templates.TemplateResponse("dashboard.html", {"request": request})
 
 
 @app.get("/logout", response_class=HTMLResponse)
